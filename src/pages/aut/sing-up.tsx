@@ -7,28 +7,34 @@ import { toast } from 'sonner'
 
 import { useForm } from 'react-hook-form'
 import {z} from 'zod'
+import { Link, useNavigate } from "react-router-dom"
 
 const singUpForm = z.object({
+    restaurantName: z.string(),
+    managerName: z.string(),
+    phone: z.string(),
     email: z.string().email(),
 })
 
 type SingUpForm = z.infer<typeof singUpForm>
 
 export function SingUp() {
+    const navigate = useNavigate()
+
     const { register, handleSubmit, formState: {isSubmitting} } = useForm<SingUpForm>()
 
     async function handleSingUp(data: SingUpForm) {
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000))
 
-            // toast.success('Enviamos um link de autenticação para seu email', {
-            //     action: {
-            //         label: 'Reenviar',
-            //         onClick: () => handleSingUp(data),
-            //     },
-            // })
+           toast.success('Restaurante cadastrado com sucesso!', {
+               action: {
+                   label: 'Login',
+                   onClick: () => navigate('/sing-in'),
+               },
+           })
         } catch {
-            toast.error('Credenciais Inválidas')
+            toast.error('Erro ao cadastrar restaurante.')
         }
 
 
@@ -38,6 +44,12 @@ export function SingUp() {
       <>
         <Helmet title="Cadastro"/>
         <div className="p-8">
+            <Button variant="ghost" asChild className="absolute rigth-8 top-8">
+                <Link to="/sing-in">
+                    Fazer Login
+                </Link>
+            </Button>
+
             <div className="w-[350px] flex flex-col justify-center gap-6">
                 <div className="flex flex-col gap-2 text-center">
                     <h1 className="text-2xl font-semibold tracking-tight">
@@ -50,11 +62,37 @@ export function SingUp() {
 
                 <form onSubmit={handleSubmit(handleSingUp)} className="flex flex-col space-y-4">
                     <div className="space-y-2">
+                        <Label htmlFor="restaurantName">Nome do Estabelecimento</Label>
+                        <Input className="w-full" id="restaurantName" type="text" {...register('restaurantName')} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="managerName">Seu Nome</Label>
+                        <Input className="w-full" id="managerName" type="text" {...register('managerName')} />
+                    </div>
+
+                    <div className="space-y-2">
                         <Label htmlFor="email">Seu Email</Label>
                         <Input className="w-full" id="email" type="email" {...register('email')} />
                     </div>
 
+                    <div className="space-y-2">
+                        <Label htmlFor="phone">Seu celular</Label>
+                        <Input className="w-full" id="phone" type="tel" {...register('phone')} />
+                    </div>
+
                     <Button disabled={isSubmitting} type="submit">Finalizar cadastro</Button>
+
+                    <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
+                        Ao continuar, você concorda com nossos{'  '}
+                        <a href="" >
+                            Termos de serviço  
+                         </a>{'  '}
+                         e{'  '}
+                        <a href="" className="underline underline-offset-4">
+                            políticas de privacidade
+                        </a>
+                    </p>
                 </form>
             </div>
         </div>

@@ -12,7 +12,7 @@ export function AuthLayout() {
             <footer className="text-sm">
                 Painel do parceiro &copy; pizza.shop - {new Date().getUTCFullYear()}
             </footer>
-            <div className="flex flex-col itens-center justify-center">
+            <div className="flex flex-col itens-center justify-center relative">
                 <Outlet />
             </div>
         </div>
