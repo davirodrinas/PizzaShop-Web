@@ -1,30 +1,28 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Dashboard } from "./pages/app/dashboard";
-import { SingIn } from "./pages/aut/sing-in";
-import { AppLayout } from "./pages/_layouts/app";
-import { AuthLayout } from "./pages/_layouts/auth";
-import { SingUp } from "./pages/aut/sing-up";
-import { Orders } from "./pages/app/orders/orders";
+import { createBrowserRouter } from 'react-router-dom'
 
+import { AppLayout } from './pages/_layouts/app'
+import { AuthLayout } from './pages/_layouts/auth'
+import { Dashboard } from './pages/app/dashboard/dashboard'
+import { Orders } from './pages/app/orders/orders'
+import { SingIn } from './pages/aut/sing-in'
+import { SingUp } from './pages/aut/sing-up'
 
 export const router = createBrowserRouter([
-    {
-        path: '/', 
-        element: <AppLayout />,
-        children: [
-            {path: '/', element: <Dashboard /> },
-            {path: '/orders', element: <Orders /> }
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      { path: '/', element: <Dashboard /> },
+      { path: '/orders', element: <Orders /> },
+    ],
+  },
 
-        ],
-    },
-
-    {
-        path: '/', 
-        element: <AuthLayout />,
-        children: [
-            {path: '/sing-in', element: <SingIn /> },
-            {path: '/sing-up', element: <SingUp /> }
-        ],
-        }
-
+  {
+    path: '/',
+    element: <AuthLayout />,
+    children: [
+      { path: '/sing-in', element: <SingIn /> },
+      { path: '/sing-up', element: <SingUp /> },
+    ],
+  },
 ])
